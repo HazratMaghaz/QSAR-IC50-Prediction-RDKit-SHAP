@@ -1,0 +1,15 @@
+name: qsar-ml
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - joblib
+  - rdkit
+  - shap
+  - jupyterlab
+  - ipykernel

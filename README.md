@@ -1,163 +1,206 @@
-<h1 align="center">🔬 Machine Learning-Based QSAR Analysis</h1>
-<p align="center">A Step-by-Step Pipeline for Predicting IC50 & Structural Optimization Using Atom-Based QSAR</p>
+# QSAR IC50 Prediction using RDKit, Machine Learning, and SHAP
+
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![QSAR](https://img.shields.io/badge/Domain-QSAR-green)
+![RDKit](https://img.shields.io/badge/Cheminformatics-RDKit-orange)
+![Machine Learning](https://img.shields.io/badge/ML-scikit--learn-yellow)
+![SHAP](https://img.shields.io/badge/Explainability-SHAP-purple)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" />
-  <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" />
-  <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" />
+A reproducible machine-learning QSAR workflow for IC50/pIC50 prediction using SMILES-based molecular descriptors, regression models, and optional SHAP interpretation.
 </p>
 
-> ⚠️ **Disclaimer:** Dataset not shared due to  confidentiality. Results are reproducible with custom data.
+---
+
+## Project Overview
+
+This repository demonstrates an end-to-end **QSAR (Quantitative Structure-Activity Relationship)** workflow for predicting biological activity from chemical structure.
+
+The public version uses a small demo dataset so the workflow can be shared safely without exposing confidential project data.
+
+### Main goals
+
+- clean compound activity data
+- convert IC50 values to pIC50
+- validate SMILES strings
+- generate RDKit molecular descriptors
+- train baseline ML regression models
+- evaluate model performance
+- save prediction tables and figures
+- predict activity for new compounds
+- optionally interpret model behavior using SHAP
 
 ---
 
-## 📁 Table of Contents
+## QSAR or QSPR?
 
-- [Overview](#-project-overview)
-- [Deliverables](#-project-deliverables)
-- [Dataset](#-dataset-client-owned-not-included)
-- [Methodology](#-methodology-summary)
-- [Results](#-final-model-performance)
-- [Visualizations](#-visualizations)
-- [Libraries Used](#-libraries-used)
-- [Conclusion](#-conclusion)
-- [Confidentiality](#-confidentiality-notice)
-- [Contact](#-contact)
+This project is **QSAR**, not QSPR.
+
+| Term | Meaning | Example target |
+|---|---|---|
+| QSAR | Quantitative Structure-Activity Relationship | IC50, pIC50, Ki, EC50 |
+| QSPR | Quantitative Structure-Property Relationship | solubility, logP, melting point |
+
+Because this project predicts **IC50/pIC50**, it is a QSAR workflow.
 
 ---
 
-## 🧪 Project Overview
+## Repository Structure
 
-This repository provides a full-stack **Atom-Based QSAR modeling pipeline** designed to:
-- Predict IC50 values (activity) from molecular structures
-- Interpret model predictions using SHAP
-- Optimize compounds via structural analogs
-
-🎯 **Goal:** Leverage machine learning to support data-driven **Structure-Activity Relationship (SAR)** decisions.
-
----
-
-## 📦 Project Deliverables
-
-✅ Fully documented Jupyter notebooks  
-✅ Regression models with SHAP interpretation  
-✅ Visual analysis of descriptor impact  
-✅ Analog generation to propose new potent structures
-
-📌 Models Trained:
-- `RandomForest`
-- `ElasticNet`
-- `XGBoost`
-- `Ridge Regression`
-
----
-
-## 🧬 Dataset *(Client-Owned, Not Included)*
-
-- 16 small molecules  
-- Contains SMILES & experimental IC50 values  
-- Data processed but **not uploaded** due to NDA
-
-📎 *You may insert a sample SMILES molecule as an image here to represent the dataset.*  
-<!-- INSERT A SIMPLE MOLECULE IMAGE WITH LABEL “Example SMILES Molecule” -->
-
----
-
-## 🔬 Methodology Summary
-
-### 1. Descriptor Calculation
-- Used `Mordred` to generate **1600+ descriptors**
-- After filtering: **1137 numeric descriptors** retained
-- Preprocessing included removal of:
-  - Constant features
-  - Missing/non-numeric values
-
-### 2. Model Training & Evaluation
-Models were assessed based on:
-
-| Metric | Description |
-|--------|-------------|
-| **R² Score** | Predictive power |
-| **MAE** | Model error |
-| **±0.5 Accuracy** | Acceptable IC50 prediction range |
-
-> 🔧 *Add animated progress bars or step indicators here for each stage (Optional but useful)*
-
-### 3. Explainability with SHAP
-- Used SHAP **beeswarm** and **waterfall** plots
-- Key Features:  
-  - `PEOE_VSA7`  
-  - `MaxAbsPartialCharge`  
-  - Other charge/electrostatic descriptors
-
-### 4. Analog Design
-- Top 5 potent compounds analyzed
-- RDKit used to generate analogs
-- Model re-evaluated analogs vs. parents:
-
-| Compound | Parent pIC50 | Analog pIC50 | Δ Change |
-|----------|--------------|--------------|----------|
-| FI-3-8   | 4.92         | 4.82         | -0.10    |
-| FI-3     | 4.88         | 4.75         | -0.13    |
-| FI-3-1   | 4.77         | 4.69         | -0.08    |
-| FI-3-12  | 4.79         | 4.70         | -0.09    |
-
-<!-- 🔍 Suggestion: Add molecule structure comparison image here (Parent vs. Analog) -->
+```text
+.
+├── data/
+│   ├── sample_qsar_dataset.csv
+│   ├── new_compounds.csv
+│   └── README.md
+├── docs/
+│   ├── methodology.md
+│   ├── limitations.md
+│   └── confidentiality_note.md
+├── notebooks/
+│   ├── 01_data_preprocessing.ipynb
+│   ├── 02_descriptor_generation.ipynb
+│   ├── 03_model_training_evaluation.ipynb
+│   ├── 04_shap_interpretation.ipynb
+│   └── 05_new_compound_prediction.ipynb
+├── scripts/
+│   ├── preprocess_data.py
+│   ├── generate_descriptors.py
+│   ├── train_models.py
+│   ├── evaluate_models.py
+│   ├── shap_analysis.py
+│   └── predict_new_compounds.py
+├── results/
+│   ├── figures/
+│   ├── tables/
+│   └── models/
+├── README.md
+├── requirements.txt
+├── environment.yml
+├── LICENSE
+└── .gitignore
+```
 
 ---
 
-## 📊 Final Model Performance
+## Workflow
 
-| Model        | R² Score | MAE    | Accuracy (±0.5) | Notes        |
-|--------------|----------|--------|------------------|--------------|
-| ElasticNet   | 0.7877   | 0.1004 | ✅ 100%          | ✅ Best model |
-| RandomForest | ~0.24    | 0.2400 | ✅ 100% (Overfit)| ⚠️ Overfitting |
-| XGBoost      | ~0.29    | 0.2900 | ⚠️ 75%           | ⚠️ Overfit risk |
-
-📌 *Initial overfitting reduced by feature filtering & analog testing*
-
----
-
-## 📈 Visualizations
-
-> ⚠️ Replace the placeholders below with actual graphs (SHAP, histograms, comparisons)
-
-| 📊 Plot Type     | 📝 Description                     |
-|------------------|------------------------------------|
-| SHAP Beeswarm    | Global feature impact               |
-| SHAP Waterfall   | Single-sample explanation           |
-| IC50 Comparison  | Parent vs analog predictions        |
-| Descriptor Hist  | Distribution of top molecular features |
-
-<!-- Use matplotlib/seaborn/plotly graphs or GIFs here for animated charts -->
+```mermaid
+flowchart LR
+    A[SMILES + IC50 Data] --> B[Data Cleaning]
+    B --> C[pIC50 Conversion]
+    C --> D[RDKit Descriptors]
+    D --> E[ML Model Training]
+    E --> F[Model Evaluation]
+    F --> G[Prediction for New Compounds]
+    E --> H[Optional SHAP Interpretation]
+```
 
 ---
 
-## 🤖 Libraries Used
+## Scripts
+
+| Script | Purpose |
+|---|---|
+| `preprocess_data.py` | Cleans QSAR input data and converts IC50 to pIC50 |
+| `generate_descriptors.py` | Calculates RDKit descriptors from SMILES |
+| `train_models.py` | Trains Ridge, ElasticNet, and Random Forest models |
+| `evaluate_models.py` | Creates model-performance comparison plots |
+| `shap_analysis.py` | Runs optional SHAP-based model interpretation |
+| `predict_new_compounds.py` | Predicts pIC50 and IC50 for new compounds |
+
+---
+
+## Installation
+
+### Recommended: Conda
 
 ```bash
-✔ pandas
-✔ numpy
-✔ scikit-learn
-✔ xgboost
-✔ matplotlib / seaborn
-✔ mordred-descriptors
-✔ rdkit
-✔ shap
-
+conda env create -f environment.yml
+conda activate qsar-ml
 ```
+
+### Alternative: Python virtual environment
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+RDKit installation is usually more reliable through Conda.
+
 ---
 
-## 📫 Contact Me
+## How to Run
 
-I'm open to collaboration, freelance projects, or discussing QSAR/bioinformatics-related work.
+Run from the repository root:
 
-<p align="left">
-  <a href="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" target="_blank">
-    <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" />
-  </a>
-  <a href="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip">
-    <img src="https://raw.githubusercontent.com/HazratMaghaz/Machine-learning-based-QSAR-Analysis/main/capilliform/QSA-Analysis-Machine-based-learning-3.3.zip" />
-  </a>
-</p>
+```bash
+python scripts/preprocess_data.py
+python scripts/generate_descriptors.py
+python scripts/train_models.py
+python scripts/evaluate_models.py
+python scripts/predict_new_compounds.py
+```
 
+Optional SHAP interpretation:
+
+```bash
+python scripts/shap_analysis.py
+```
+
+---
+
+## Expected Outputs
+
+| Output | Description |
+|---|---|
+| `results/tables/clean_qsar_dataset.csv` | Cleaned activity dataset |
+| `results/tables/qsar_descriptors.csv` | RDKit descriptor table |
+| `results/tables/model_performance.csv` | Model evaluation summary |
+| `results/tables/predictions_demo.csv` | Test-set predictions |
+| `results/tables/new_compound_predictions.csv` | Predictions for new compounds |
+| `results/figures/predicted_vs_observed.png` | Observed vs predicted pIC50 plot |
+| `results/figures/model_mae_comparison.png` | Model MAE comparison plot |
+| `results/figures/shap_summary.png` | Optional SHAP summary plot |
+
+---
+
+## Notes on Data
+
+The original confidential/client dataset is not included in this public repository. Instead, `data/sample_qsar_dataset.csv` provides a small demonstration dataset to show the structure of the workflow.
+
+For a real QSAR study, use a larger curated dataset with consistent assay conditions, external validation, and applicability-domain analysis.
+
+---
+
+## Skills Demonstrated
+
+- cheminformatics with RDKit
+- QSAR data preprocessing
+- IC50 to pIC50 conversion
+- molecular descriptor generation
+- machine learning regression modeling
+- model evaluation with R², MAE, and RMSE
+- new-compound activity prediction
+- optional SHAP explainability
+- reproducible Python project organization
+
+---
+
+## Author
+
+**Hazrat Maghaz**  
+Bioinformatician | Computational Biologist | AI-driven Drug Discovery
+
+- Website: https://hazratmaghaz.tech
+- GitHub: https://github.com/HazratMaghaz
+- LinkedIn: https://www.linkedin.com/in/hazrat-maghaz-6967b9374/
+
+---
+
+## License
+
+This repository is available under the MIT License. See the `LICENSE` file for details.
