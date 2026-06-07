@@ -24,3 +24,6 @@ Thumbs.db
 # Model/data outputs that can be regenerated
 results/models/*.joblib
 results/models/*.pkl
+
+# Local legacy raw files - not tracked
+QSAR Codes/
