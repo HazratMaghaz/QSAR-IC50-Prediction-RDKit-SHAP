@@ -1,0 +1,13 @@
+file,shape,first_cols,has_pIC50,missing_total
+AtomPairs2D_fingerPrintCount.csv,"(987, 67)","['pIC50', 'APC2D1_N_N', 'APC2D2_C_O', 'APC2D2_C_S', 'APC2D2_N_N', 'APC2D2_N_O', 'APC2D2_O_O', 'APC2D2_F_X']",True,0
+AtomPairs2D_fingerPrinter.csv,"(987, 75)","['pIC50', 'AD2D13', 'AD2D91', 'AD2D92', 'AD2D102', 'AD2D156', 'AD2D169', 'AD2D170']",True,0
+Estate_FingerPrinter.csv,"(987, 20)","['pIC50', 'EStateFP7', 'EStateFP9', 'EStateFP11', 'EStateFP13', 'EStateFP15', 'EStateFP18', 'EStateFP19']",True,0
+Extended_finterPrinter.csv,"(987, 915)","['pIC50', 'ExtFP1', 'ExtFP2', 'ExtFP3', 'ExtFP4', 'ExtFP5', 'ExtFP6', 'ExtFP7']",True,0
+FingerPrinter.csv,"(987, 896)","['pIC50', 'FP1', 'FP2', 'FP3', 'FP4', 'FP5', 'FP6', 'FP7']",True,0
+GraphOnly_FingerPrinter.csv,"(987, 249)","['pIC50', 'GraphFP5', 'GraphFP8', 'GraphFP9', 'GraphFP12', 'GraphFP31', 'GraphFP37', 'GraphFP38']",True,0
+KlekotaRoth_FingerPrinter.csv,"(987, 81)","['pIC50', 'KRFP1', 'KRFP14', 'KRFP18', 'KRFP228', 'KRFP297', 'KRFP298', 'KRFP344']",True,0
+KlekotaRoth_FingerprintCount.csv,"(987, 77)","['pIC50', 'KRFPC1', 'KRFPC14', 'KRFPC16', 'KRFPC18', 'KRFPC228', 'KRFPC298', 'KRFPC344']",True,0
+MACCS_FingerPrinter.csv,"(987, 70)","['pIC50', 'MACCSFP16', 'MACCSFP21', 'MACCSFP38', 'MACCSFP41', 'MACCSFP42', 'MACCSFP53', 'MACCSFP57']",True,0
+Pubchem_FingerPrinter.csv,"(987, 96)","['pIC50', 'PubchemFP2', 'PubchemFP12', 'PubchemFP15', 'PubchemFP16', 'PubchemFP19', 'PubchemFP20', 'PubchemFP24']",True,0
+Substructure_fingerPrintCount.csv,"(987, 29)","['pIC50', 'SubFPC1', 'SubFPC2', 'SubFPC3', 'SubFPC5', 'SubFPC9', 'SubFPC13', 'SubFPC18']",True,0
+Substructure_fingerPrinter.csv,"(987, 25)","['pIC50', 'SubFP1', 'SubFP2', 'SubFP3', 'SubFP5', 'SubFP9', 'SubFP12', 'SubFP18']",True,0
