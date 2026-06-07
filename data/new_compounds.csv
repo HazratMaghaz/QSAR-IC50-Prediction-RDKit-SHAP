@@ -1,0 +1,4 @@
+compound_id,smiles
+NEW_001,CCOc1ccccc1O
+NEW_002,CCN(CC)C(=O)c1ccc(O)cc1
+NEW_003,CC(C)NCC(O)c1ccc(O)cc1
