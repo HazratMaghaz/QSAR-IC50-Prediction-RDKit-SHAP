@@ -1,35 +1,28 @@
-# QSAR IC50 Prediction using RDKit, Machine Learning, and SHAP
+# QSAR IC50/pIC50 Prediction using Molecular Fingerprints, Machine Learning, and SHAP
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![QSAR](https://img.shields.io/badge/Domain-QSAR-green)
-![RDKit](https://img.shields.io/badge/Cheminformatics-RDKit-orange)
+![Cheminformatics](https://img.shields.io/badge/Cheminformatics-Fingerprints-orange)
 ![Machine Learning](https://img.shields.io/badge/ML-scikit--learn-yellow)
-![SHAP](https://img.shields.io/badge/Explainability-SHAP-purple)
+![Explainability](https://img.shields.io/badge/Explainability-SHAP-purple)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 <p align="center">
-A reproducible machine-learning QSAR workflow for IC50/pIC50 prediction using SMILES-based molecular descriptors, regression models, and optional SHAP interpretation.
+A reproducible AI-based QSAR workflow for pIC50 prediction using molecular fingerprints, machine-learning regression models, model comparison, and applicability-domain diagnostics.
 </p>
 
 ---
 
 ## Project Overview
 
-This repository demonstrates an end-to-end **QSAR (Quantitative Structure-Activity Relationship)** workflow for predicting biological activity from chemical structure.
+This repository demonstrates an end-to-end **QSAR (Quantitative Structure-Activity Relationship)** workflow for predicting biological activity from molecular fingerprint descriptors.
 
-The public version uses a small demo dataset so the workflow can be shared safely without exposing confidential project data.
+The project now contains two dataset tracks:
 
-### Main goals
+1. **Demo SMILES dataset** for showing the general RDKit descriptor pipeline.
+2. **Legacy fingerprint QSAR datasets** containing 987 learning-project compounds represented using multiple molecular fingerprint types.
 
-- clean compound activity data
-- convert IC50 values to pIC50
-- validate SMILES strings
-- generate RDKit molecular descriptors
-- train baseline ML regression models
-- evaluate model performance
-- save prediction tables and figures
-- predict activity for new compounds
-- optionally interpret model behavior using SHAP
+The main modeling workflow focuses on the fingerprint datasets because they are large enough for meaningful machine-learning comparison.
 
 ---
 
@@ -42,7 +35,52 @@ This project is **QSAR**, not QSPR.
 | QSAR | Quantitative Structure-Activity Relationship | IC50, pIC50, Ki, EC50 |
 | QSPR | Quantitative Structure-Property Relationship | solubility, logP, melting point |
 
-Because this project predicts **IC50/pIC50**, it is a QSAR workflow.
+Because the target variable is **pIC50**, this is a QSAR workflow.
+
+---
+
+## Dataset Summary
+
+The fingerprint workflow uses 12 molecular fingerprint datasets stored in:
+
+```text
+data/legacy_fingerprints/
+```
+
+Each dataset contains molecular fingerprint features and a `pIC50` target column.
+
+| Dataset type | Purpose |
+|---|---|
+| MACCS keys | Compact structural key representation |
+| PubChem fingerprints | Public chemical substructure fingerprints |
+| Klekota-Roth fingerprints | Larger pharmacophore/substructure-style fingerprints |
+| AtomPairs2D fingerprints | Atom-pair molecular representation |
+| Substructure fingerprints | Simple substructure presence/count features |
+| E-state fingerprints | Electrotopological-state descriptors |
+| Extended fingerprints | High-dimensional fingerprint representation |
+
+The clean fingerprint workflow compares multiple models across all available fingerprint files.
+
+---
+
+## Current Best Result
+
+The fingerprint model-comparison workflow produced the following best result:
+
+| Best fingerprint dataset | Best model | R² | MAE | RMSE |
+|---|---:|---:|---:|---:|
+| `KlekotaRoth_FingerprintCount.csv` | ExtraTrees | 0.6787 | 0.5698 | 0.7573 |
+
+Results are saved in:
+
+```text
+results/tables/fingerprint_model_metrics.csv
+results/tables/best_model_predictions.csv
+results/figures/model_comparison_by_fingerprint.png
+results/figures/best_model_predicted_vs_actual.png
+results/figures/williams_plot_demo.png
+results/models/best_qsar_model.joblib
+```
 
 ---
 
@@ -51,30 +89,43 @@ Because this project predicts **IC50/pIC50**, it is a QSAR workflow.
 ```text
 .
 ├── data/
+│   ├── legacy_fingerprints/
 │   ├── sample_qsar_dataset.csv
 │   ├── new_compounds.csv
 │   └── README.md
 ├── docs/
 │   ├── methodology.md
 │   ├── limitations.md
-│   └── confidentiality_note.md
+│   ├── confidentiality_note.md
+│   ├── fingerprint_dataset_summary.md
+│   ├── fingerprint_file_inventory.csv
+│   └── legacy_code_mapping.md
 ├── notebooks/
 │   ├── 01_data_preprocessing.ipynb
 │   ├── 02_descriptor_generation.ipynb
 │   ├── 03_model_training_evaluation.ipynb
 │   ├── 04_shap_interpretation.ipynb
-│   └── 05_new_compound_prediction.ipynb
+│   ├── 05_new_compound_prediction.ipynb
+│   ├── 06_fingerprint_model_comparison.ipynb
+│   ├── 07_shap_interpretation.ipynb
+│   ├── 08_applicability_domain_williams_plot.ipynb
+│   ├── 09_new_compound_prediction.ipynb
+│   └── legacy_reference/
 ├── scripts/
 │   ├── preprocess_data.py
 │   ├── generate_descriptors.py
 │   ├── train_models.py
 │   ├── evaluate_models.py
 │   ├── shap_analysis.py
-│   └── predict_new_compounds.py
+│   ├── predict_new_compounds.py
+│   ├── train_fingerprint_qsar_models.py
+│   └── applicability_domain.py
 ├── results/
 │   ├── figures/
 │   ├── tables/
 │   └── models/
+├── archive/
+│   └── legacy_r_models/
 ├── README.md
 ├── requirements.txt
 ├── environment.yml
@@ -88,13 +139,13 @@ Because this project predicts **IC50/pIC50**, it is a QSAR workflow.
 
 ```mermaid
 flowchart LR
-    A[SMILES + IC50 Data] --> B[Data Cleaning]
-    B --> C[pIC50 Conversion]
-    C --> D[RDKit Descriptors]
-    D --> E[ML Model Training]
-    E --> F[Model Evaluation]
-    F --> G[Prediction for New Compounds]
-    E --> H[Optional SHAP Interpretation]
+    A[Fingerprint datasets] --> B[Data cleaning]
+    B --> C[Train/test split]
+    C --> D[Model training]
+    D --> E[Model comparison]
+    E --> F[Best model selection]
+    F --> G[Prediction plots]
+    F --> H[Applicability-domain diagnostic]
 ```
 
 ---
@@ -103,25 +154,41 @@ flowchart LR
 
 | Script | Purpose |
 |---|---|
-| `preprocess_data.py` | Cleans QSAR input data and converts IC50 to pIC50 |
-| `generate_descriptors.py` | Calculates RDKit descriptors from SMILES |
-| `train_models.py` | Trains Ridge, ElasticNet, and Random Forest models |
-| `evaluate_models.py` | Creates model-performance comparison plots |
-| `shap_analysis.py` | Runs optional SHAP-based model interpretation |
-| `predict_new_compounds.py` | Predicts pIC50 and IC50 for new compounds |
+| `preprocess_data.py` | Cleans demo SMILES/IC50 dataset and converts IC50 to pIC50 |
+| `generate_descriptors.py` | Generates RDKit descriptors for demo SMILES data |
+| `train_models.py` | Trains baseline QSAR models on demo descriptors |
+| `evaluate_models.py` | Evaluates saved prediction tables |
+| `shap_analysis.py` | Provides optional SHAP interpretation workflow |
+| `predict_new_compounds.py` | Predicts pIC50 for new demo compounds |
+| `train_fingerprint_qsar_models.py` | Trains and compares ML models across 12 fingerprint datasets |
+| `applicability_domain.py` | Generates residual/applicability-domain style diagnostic plot |
+
+---
+
+## Notebooks
+
+| Notebook | Purpose |
+|---|---|
+| `01_data_preprocessing.ipynb` | Introduces dataset structure and preprocessing |
+| `02_descriptor_generation.ipynb` | Explains descriptor/fingerprint feature matrices |
+| `03_model_training_evaluation.ipynb` | Runs or summarizes model training and evaluation |
+| `04_shap_interpretation.ipynb` | Describes SHAP explainability direction |
+| `05_new_compound_prediction.ipynb` | Demonstrates prediction workflow concept |
+| `06_fingerprint_model_comparison.ipynb` | Summarizes real fingerprint model comparison |
+| `08_applicability_domain_williams_plot.ipynb` | Shows applicability-domain diagnostic output |
 
 ---
 
 ## Installation
 
-### Recommended: Conda
+### Option 1: Conda
 
 ```bash
 conda env create -f environment.yml
 conda activate qsar-ml
 ```
 
-### Alternative: Python virtual environment
+### Option 2: pip/venv
 
 ```bash
 python -m venv .venv
@@ -129,71 +196,55 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-RDKit installation is usually more reliable through Conda.
+For RDKit-based workflows, conda is recommended.
 
 ---
 
 ## How to Run
 
-Run from the repository root:
+Train and compare fingerprint QSAR models:
 
 ```bash
-python scripts/preprocess_data.py
-python scripts/generate_descriptors.py
-python scripts/train_models.py
-python scripts/evaluate_models.py
-python scripts/predict_new_compounds.py
+python scripts/train_fingerprint_qsar_models.py
 ```
 
-Optional SHAP interpretation:
+Generate applicability-domain diagnostic:
 
 ```bash
-python scripts/shap_analysis.py
+python scripts/applicability_domain.py
 ```
+
+Run the notebooks from the repository root using Jupyter or VS Code.
 
 ---
 
-## Expected Outputs
+## Important Notes
 
-| Output | Description |
-|---|---|
-| `results/tables/clean_qsar_dataset.csv` | Cleaned activity dataset |
-| `results/tables/qsar_descriptors.csv` | RDKit descriptor table |
-| `results/tables/model_performance.csv` | Model evaluation summary |
-| `results/tables/predictions_demo.csv` | Test-set predictions |
-| `results/tables/new_compound_predictions.csv` | Predictions for new compounds |
-| `results/figures/predicted_vs_observed.png` | Observed vs predicted pIC50 plot |
-| `results/figures/model_mae_comparison.png` | Model MAE comparison plot |
-| `results/figures/shap_summary.png` | Optional SHAP summary plot |
-
----
-
-## Notes on Data
-
-The original confidential/client dataset is not included in this public repository. Instead, `data/sample_qsar_dataset.csv` provides a small demonstration dataset to show the structure of the workflow.
-
-For a real QSAR study, use a larger curated dataset with consistent assay conditions, external validation, and applicability-domain analysis.
+- The fingerprint datasets were used for personal QSAR learning and portfolio demonstration.
+- The raw legacy folder `QSAR Codes/` is intentionally ignored and not tracked.
+- The polished repository contains cleaned datasets, notebooks, scripts, documentation, and generated results.
+- Some notebooks are designed as explanatory workflow notebooks and may call scripts instead of duplicating all pipeline code.
 
 ---
 
 ## Skills Demonstrated
 
-- cheminformatics with RDKit
-- QSAR data preprocessing
-- IC50 to pIC50 conversion
-- molecular descriptor generation
-- machine learning regression modeling
-- model evaluation with R², MAE, and RMSE
-- new-compound activity prediction
-- optional SHAP explainability
-- reproducible Python project organization
+- QSAR modeling
+- pIC50 prediction
+- Molecular fingerprints
+- Model comparison across descriptor sets
+- Regression model evaluation
+- ExtraTrees/RandomForest/ElasticNet/GradientBoosting modeling
+- Applicability-domain style diagnostics
+- Jupyter-based scientific reporting
+- Clean repository organization
 
 ---
 
 ## Author
 
 **Hazrat Maghaz**  
-Bioinformatician | Computational Biologist | AI-driven Drug Discovery
+Bioinformatician | Computational Biologist | AI-driven Drug Discovery Enthusiast
 
 - Website: https://hazratmaghaz.tech
 - GitHub: https://github.com/HazratMaghaz
